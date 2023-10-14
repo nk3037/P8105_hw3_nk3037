@@ -138,3 +138,20 @@ brfss_state_trend %>%
 ```
 
 The `avg_data_value` values for most the states are generally concentrated between 20-25% across the 2002-2010 time period. Alaska in 2005 is a outlier, where the crude prevalence (%) across AK counties went down to about 12%. In general, AK has had lower average crude prevalence (%) than the other states throughout the 2002-2010 period. With so many states being displayed on the same graph, in this case a spaghetti plot is very difficult to read. There does not seem to be much of an increase or decrease in the average crude prevalence (%) across the time period.
+
+Below is a two-panel plot that shows, for the years 2006 and 2010, the distribution of crude prevalence (%) for responses (“Poor” to “Excellent”) among counties in NY State.
+```{r}
+brfss_smart2010 %>% 
+  filter(state == "NY") %>% 
+  filter(year %in% c(2006, 2010)) %>% 
+  ggplot(aes(x = data_value, fill = response, color = response)) +
+  geom_density(alpha = 0.75) +
+  facet_wrap(~year, ncol = 2) +
+  labs(
+    title = "Distribution of crude prevalence (%) by response in New York State (2006 vs 2010)",
+    x = "Crude prevalence (%)",
+    y = "Frequency"
+  )
+```
+
+The two side by side plots show the distribution of responses as they relate to crude prevalence in 2006 and 2010.In 2006 and 2010, The lower the crude prevalence, the higher the frequency of "Poor" responses. In 2010, the spread of "Poor" responses is over a slightly wider range of crude prevalence rates compared to 2006 (2-5% in 2006 and 2-8% in 2010). There are also fewer "Poor" and "Fair" responses and more "Good" responses between 2006 and 2010. Generally, the distribuition curves all apprear to have shifted right, indicating improving health overall.
