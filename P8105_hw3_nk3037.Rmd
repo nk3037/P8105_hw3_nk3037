@@ -75,3 +75,23 @@ instacart %>%
     values_from = avg_tod) %>% 
   knitr::kable()
 ```
+
+## Question 2
+### Setup and Data Cleaning
+```{r}
+library(p8105.datasets)
+data("brfss_smart2010")
+
+brfss_smart2010 = janitor::clean_names(brfss_smart2010, case = "snake") #convert all variable names into snake_case
+
+brfss_smart2010 = brfss_smart2010 %>% 
+  rename(state = locationabbr) %>% 
+  rename(county = locationdesc)
+# renamed Locationabbr to state and Locationdesc to county.
+
+brfss_smart2010 <- brfss_smart2010 %>% 
+  filter(topic == "Overall Health") %>% 
+  filter(response %in% c("Excellent", "Very good", "Good", "Fair", "Poor")) %>% 
+  arrange(factor(response, levels = c("Poor", "Fair good", "Good", "Very good", "Excellent")))
+# Filtered to keep only overall health topic, and those with Poor to Excellent responses and arranged the responses from Poor to Excellent
+```
