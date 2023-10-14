@@ -32,5 +32,11 @@ most_ordered_item <- names(frequency_table)[which.max(frequency_table)]
 # Created a variable to store the most ordered item
 ```
 The dataset has `r nrow(instacart)` rows and `r ncol(instacart)` columns. Each row in the dataset represents a product in an order. Besides having columns that identify orders and products, the dataset has columns that tell us the order that the product was added to cart, whether it was reordered or not, order time, department and aisle name and id of the product.The dataset contains information for `r instacart %>% select(order_id) %>% distinct() %>% count()` orders from `r instacart %>% select(department) %>% distinct() %>% count()` departments. The most ordered item is `r most_ordered_item`.
+
+This table below shows the number of aisles and the most commonly ordered items:
+```{r}
+instacart |> 
+  count(aisle) |> 
+  arrange(desc(n))
 ```
 
