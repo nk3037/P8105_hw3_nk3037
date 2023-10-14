@@ -117,3 +117,24 @@ brfss_filtered_2010 = brfss_smart2010 %>%
 ```
 
 In 2002, `r nrow(brfss_filtered_2010)` states were observed at 7 or more counties. The states are: **CA, CO, FL, MA, MD, NC, NE, NJ, NY, OH, PA, SC, TX, WA**.
+
+The code chunk below constructs a dataset that is limited to "Excellent" responses, and contains, year, state, and a variable that averages the crude prevalence (%) across locations within a state. Then, a “spaghetti” plot is made showing the average crude prevalence (%) over time within a state.
+```{r, message = FALSE}
+brfss_state_trend = brfss_smart2010 %>%
+  filter(response == "Excellent") %>%
+  group_by(year, state) %>%
+  summarise(avg_data_value = mean(data_value))
+# created a new dataset limited to Excellent responses and contains year, state and created a new variable avg_data_value that averages data_value across counties in a state
+
+brfss_state_trend %>% 
+  ggplot(aes(x = year, y = avg_data_value, color = state, group = state)) +
+  geom_line()+
+  labs(
+    title = "Average crude prevalence (%) trends in 50 US states (and DC) between 2002 and 2010",
+    x = "Year",
+    y = "Average crude prevalence (%)"
+  ) +
+ theme(legend.position = "right")
+```
+
+The `avg_data_value` values for most the states are generally concentrated between 20-25% across the 2002-2010 time period. Alaska in 2005 is a outlier, where the crude prevalence (%) across AK counties went down to about 12%. In general, AK has had lower average crude prevalence (%) than the other states throughout the 2002-2010 period. With so many states being displayed on the same graph, in this case a spaghetti plot is very difficult to read. There does not seem to be much of an increase or decrease in the average crude prevalence (%) across the time period.
