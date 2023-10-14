@@ -106,3 +106,14 @@ brfss_filtered_2002 = brfss_smart2010 %>%
 ```
 
 In 2002, `r nrow(brfss_filtered_2002)` states were observed at 7 or more counties. The states are **CT, FL, MA, NC, NJ, PA**
+
+This tells us in 2010, which states were observed at 7 or more locations
+```{r}
+brfss_filtered_2010 = brfss_smart2010 %>% 
+  filter(year == 2010) %>% 
+  group_by(state) %>%
+  summarise(count = n_distinct(county)) %>% 
+  filter (count >= 7)
+```
+
+In 2002, `r nrow(brfss_filtered_2010)` states were observed at 7 or more counties. The states are: **CA, CO, FL, MA, MD, NC, NE, NJ, NY, OH, PA, SC, TX, WA**.
