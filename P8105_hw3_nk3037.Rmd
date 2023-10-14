@@ -95,3 +95,14 @@ brfss_smart2010 <- brfss_smart2010 %>%
   arrange(factor(response, levels = c("Poor", "Fair good", "Good", "Very good", "Excellent")))
 # Filtered to keep only overall health topic, and those with Poor to Excellent responses and arranged the responses from Poor to Excellent
 ```
+
+This tells us in 2002, which states were observed at 7 or more locations
+```{r}
+brfss_filtered_2002 = brfss_smart2010 %>% 
+  filter(year == 2002) %>% 
+  group_by(state) %>%
+  summarise(count = n_distinct(county)) %>% 
+  filter (count >= 7)
+```
+
+In 2002, `r nrow(brfss_filtered_2002)` states were observed at 7 or more counties. The states are **CT, FL, MA, NC, NJ, PA**
