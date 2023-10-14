@@ -180,3 +180,14 @@ merged_nhanes = merged_nhanes %>%
   filter(age >= 21) %>% 
   filter(!is.na(sex) & !is.na(age) & !is.na(bmi) & !is.na(education)) 
 ```
+
+This produces a table for the number of men and women in each education category, and creates a visualization of the age distributions for men and women in each education category.
+```{r}
+# Counting the number of men and women in each education category
+merged_nhanes %>%
+  group_by(sex, education) %>% 
+  summarize(count = n()) %>%
+  pivot_wider(names_from = sex, values_from = count) %>% 
+  arrange(factor(education, levels = c("Less than high school", "High school equivalent", "More than high school")))
+```
+The table above shows that approximately the same number of men and women had less than a high school education and more than a high school education. However, more men had a high school equivalent level of education than women (35 men and 23 women). 
