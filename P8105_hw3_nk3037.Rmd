@@ -51,3 +51,15 @@ instacart %>%
   labs(title = "Number of items ordered in each aisle") +
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
+
+The table shows the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits” and include the number of times each item is ordered.
+```{r}
+instacart %>% 
+  filter(aisle %in% c("baking ingredients", "dog food care", "packaged vegetables fruits")) %>% 
+  group_by(aisle) %>%  
+  count(product_name) %>% 
+  mutate(rank = min_rank(desc(n))) %>% 
+  filter(rank < 4) %>% 
+  arrange(desc(n)) %>% 
+  knitr::kable()
+```
