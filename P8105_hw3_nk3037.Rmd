@@ -63,3 +63,15 @@ instacart %>%
   arrange(desc(n)) %>% 
   knitr::kable()
 ```
+
+The table shows the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are ordered on each day of the week 
+```{r, message=FALSE}
+instacart %>% 
+  filter(product_name %in% c("Coffee Ice Cream","Pink Lady Apples")) %>% 
+  group_by(product_name, order_dow) %>%
+  summarize(avg_tod = mean(order_hour_of_day)) %>% 
+  pivot_wider(
+    names_from = order_dow,
+    values_from = avg_tod) %>% 
+  knitr::kable()
+```
