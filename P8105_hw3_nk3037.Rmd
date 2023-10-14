@@ -191,3 +191,27 @@ merged_nhanes %>%
   arrange(factor(education, levels = c("Less than high school", "High school equivalent", "More than high school")))
 ```
 The table above shows that approximately the same number of men and women had less than a high school education and more than a high school education. However, more men had a high school equivalent level of education than women (35 men and 23 women). 
+
+This aggregates across minutes to create a total activity variable for each participant and then plots these total activities against age
+```{r}
+merged_nhanes %>% 
+  group_by(seqn, sex, education, age) %>% 
+  summarize(total_activity = sum(min1:min1440)) %>%
+  ggplot(aes(x = age, y = total_activity, color = sex)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_grid(education ~ .) +
+  labs(
+    title = "Total Activity over the day by age, gender and education level",
+    x = "Age",
+    y = "Total activity in the day"
+  ) +
+  scale_y_continuous(
+  limits = c(0,100)
+  )
+```
+The graph above shows the trends in activity over the day by age, gender and education level. Males and females with high school equivalent education had similar trends in activity in the day over age. There is a slight negative correlation between age and total activity.
+
+For those with less than high school education, males had higher total activity in the day than females for all ages. However around age 80, males and females had similar total activity in the day. There is a slight negative correlation between age and total activity for males and slight positive correlation for females.
+
+Lastly, for those with more than high school education, females generally had higher total activity for the day when compared to males.Around age 80, the trend lines for males and females converges. There is a negative correlation between age and total activity for the day in males and females.
