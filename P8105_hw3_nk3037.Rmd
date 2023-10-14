@@ -1,0 +1,20 @@
+---
+title: "P8105_hw3_nk3037"
+author: "Navya Koneripalli"
+date: "2023-10-11"
+output: github_document
+---
+## Setup
+```{r setup, include=FALSE}
+library(tidyverse)
+library(p8105.datasets)
+library (ggplot2)
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = FALSE,
+	fig.width = 12, 
+  fig.height = 8,
+  out.width = "90%"
+)
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+```
