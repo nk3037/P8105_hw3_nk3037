@@ -215,3 +215,19 @@ The graph above shows the trends in activity over the day by age, gender and edu
 For those with less than high school education, males had higher total activity in the day than females for all ages. However around age 80, males and females had similar total activity in the day. There is a slight negative correlation between age and total activity for males and slight positive correlation for females.
 
 Lastly, for those with more than high school education, females generally had higher total activity for the day when compared to males.Around age 80, the trend lines for males and females converges. There is a negative correlation between age and total activity for the day in males and females.
+
+```{r}
+nhanes_long = merged_nhanes %>% 
+  pivot_longer(
+    min1:min1440,
+    names_to = "time",
+    names_prefix = "min",
+    values_to = "MIM_values")
+activity_by_day = nhanes_long %>% 
+  ggplot(aes(x= time, y = MIM_values, color = sex))+
+  geom_point()+
+  facet_grid(~education)
+
+print(activity_by_day)
+```
+
