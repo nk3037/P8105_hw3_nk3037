@@ -216,6 +216,8 @@ For those with less than high school education, males had higher total activity 
 
 Lastly, for those with more than high school education, females generally had higher total activity for the day when compared to males.Around age 80, the trend lines for males and females converges. There is a negative correlation between age and total activity for the day in males and females.
 
+
+This is a three-panel plot that shows the 24-hour activity time courses for each education level. The color indicates sex.
 ```{r}
 nhanes_long = merged_nhanes %>% 
   pivot_longer(
@@ -226,8 +228,9 @@ nhanes_long = merged_nhanes %>%
 activity_by_day = nhanes_long %>% 
   ggplot(aes(x= time, y = MIM_values, color = sex))+
   geom_point()+
-  facet_grid(~education)
+  facet_grid(~education) +
+ geom_smooth(method = "lm")
 
 print(activity_by_day)
 ```
-
+The plot above shows the distrbition of MIMS values for the three education levels. I could not get the geom_smooth to work. In general, males and females with more than a high school education have higher MIMS scores. Also there is a midday dip in MIMS scores for all three education groups. On average, high school equivalent females had lower spread of MIMS values across the day compared to the other education groups.
